@@ -4,8 +4,11 @@ import com.example.finaltest.config.security.JwtTokenProvider;
 import com.example.finaltest.dto.ChangeBoardDto;
 import com.example.finaltest.dto.BoardDto;
 import com.example.finaltest.dto.BoardResponseDto;
+import com.example.finaltest.dto.UserDto;
 import com.example.finaltest.entity.Board;
+import com.example.finaltest.repository.UserRepository;
 import com.example.finaltest.service.BoardService;
+import com.example.finaltest.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +25,12 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 public class BoardController {
 
     private final BoardService boardService;
+    private final UserDetailService userDetailService;
 
     @Autowired
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, UserDetailService userDetailService) {
         this.boardService = boardService;
+        this.userDetailService = userDetailService;
     }
 
     @Autowired
@@ -45,10 +50,16 @@ public class BoardController {
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public ResponseEntity<BoardResponseDto> createBoard(@RequestParam String title, @RequestParam String contents) {
+    public ResponseEntity<BoardResponseDto> createBoard(HttpServletRequest request, @RequestParam String title, @RequestParam String contents) {
         BoardDto boardDto = new BoardDto();
+        String userId = jwtTokenProvider.getUsername(request.getHeader("X-AUTH-TOKEN"));
+        UserDto userDto = userDetailService.getIdTokken(userId);
+
         boardDto.setTitle(title);
         boardDto.setContents(contents);
+        boardDto.setUserId(userDto.getUid());
+        boardDto.setUserName(userDto.getName());
+
         BoardResponseDto boardResponseDto = boardService.saveBoard(boardDto);
         return ResponseEntity.status(HttpStatus.OK).body(boardResponseDto);
     }

@@ -68,35 +68,4 @@ public class ProductController {
         ProductResponseDto productResponseDto = productService.getProduct(number);
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
     }
-
-
-//    @GetMapping("/countByPrice")
-//    public ResponseEntity<Long> getCountByPrice(int price) {
-//        Long count = productService.getCountByPrice(price);
-//        return ResponseEntity.status(HttpStatus.OK).body(count);
-//    }
-//
-//    @GetMapping("/existsByNumber")
-//    public ResponseEntity<Boolean> existsByNumber(Long number) {
-//        Boolean exists = productService.existsByNumber(number);
-//        return ResponseEntity.status(HttpStatus.OK).body(exists);
-//    }
-//
-//    @GetMapping("/byNameAndPrice")
-//    public ResponseEntity<ProductResponseDto> getProductByNameAndPrice(String name, int price) {
-//        ProductResponseDto productResponseDto = productService.getProductByNameAndPrice(name,price);
-//        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
-//    }
-//
-//    @GetMapping("/listByName")
-//    public ResponseEntity<List<ProductResponseDto>> listProductByName(String name) {
-//        List<ProductResponseDto> productResponseDto = productService.listProductByName(name);
-//        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
-//    }
-//
-//    @GetMapping("/listByStock")
-//    public ResponseEntity<List<ProductResponseDto>> listByStock(int stock) {
-//        List<ProductResponseDto> productResponseDto = productService.listByStock(stock);
-//        return ResponseEntity.status(HttpStatus.OK).body(productResponseDto);
-//    }
 }

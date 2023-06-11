@@ -39,4 +39,6 @@ public class UserDetailServiceImpl implements UserDetailService {
         UserDto userDto = new UserDto(user.getId(), user.getUid(), user.getName(), user.getEmail());
         return userDto;
     }
+
+
 }
