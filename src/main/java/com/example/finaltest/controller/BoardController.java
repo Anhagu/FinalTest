@@ -45,7 +45,10 @@ public class BoardController {
 
     @PostMapping()
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardDto boardDto) {
+    public ResponseEntity<BoardResponseDto> createBoard(@RequestParam String title, @RequestParam String contents) {
+        BoardDto boardDto = new BoardDto();
+        boardDto.setTitle(title);
+        boardDto.setContents(contents);
         BoardResponseDto boardResponseDto = boardService.saveBoard(boardDto);
         return ResponseEntity.status(HttpStatus.OK).body(boardResponseDto);
     }
